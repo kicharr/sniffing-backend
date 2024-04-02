@@ -6,13 +6,11 @@ What you need: node.js, postman (or a ready-made frontend app that will send que
 
 Make sure to install the dependencies:
 
-```bash
 # npm
 npm install
 
-Start the development server on `http://localhost:8080`:
+Start the development server on `http://localhost:500-`:
 
-```bash
 # npm
 npm run start
 
