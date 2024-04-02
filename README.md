@@ -4,13 +4,14 @@ What you need: node.js, postman (or a ready-made frontend app that will send que
 
 ## Setup
 
-Make sure to install the dependencies:
-
 # npm
+Make sure to install the dependencies:
 npm install
 
-Start the development server on `http://localhost:5000`:
+
 
 # npm
 npm run start
+
+Start the development server on `http://localhost:5000`:
 
