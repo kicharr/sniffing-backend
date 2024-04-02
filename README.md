@@ -9,7 +9,7 @@ Make sure to install the dependencies:
 # npm
 npm install
 
-Start the development server on `http://localhost:500-`:
+Start the development server on `http://localhost:5000`:
 
 # npm
 npm run start
