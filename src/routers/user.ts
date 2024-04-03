@@ -16,6 +16,11 @@ const getUserInfo = async (req: Request, res: Response, next: NextFunction): Pro
     await controller.getUserInfo(req, res, next)
 }
 
+const getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const controller: UserController = initController();
+    await controller.getAllUsers(req, res, next)
+}
+
 const updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const controller: UserController = initController();
     await controller.updateUser(req, res, next)
@@ -28,6 +33,7 @@ const removeUser = async (req: Request, res: Response, next: NextFunction): Prom
 
 router.post('/user', createUser);
 router.get('/user/:id', getUserInfo);
+router.get('/users', getAllUsers);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', removeUser);
 

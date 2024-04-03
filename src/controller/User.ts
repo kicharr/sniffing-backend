@@ -42,6 +42,15 @@ export class UserController {
         }
     }
 
+    async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const usersList = await this.userQueryRepository.getAll();
+            res.status(200).json(usersList);
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const {firstName = null, secondName = null, sex = null, birthDate = null, avatarUrl = null} = req.body;

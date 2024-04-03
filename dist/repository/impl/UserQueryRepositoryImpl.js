@@ -31,6 +31,17 @@ class UserQueryRepositoryImpl {
             }
         });
     }
+    getAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const usersList = yield this.db.manyOrNone('SELECT * FROM users');
+                return usersList;
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
 }
 exports.UserQueryRepositoryImpl = UserQueryRepositoryImpl;
 //# sourceMappingURL=UserQueryRepositoryImpl.js.map

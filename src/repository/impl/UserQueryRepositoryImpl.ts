@@ -25,4 +25,13 @@ export class UserQueryRepositoryImpl implements UserQueryRepository {
     }
 
 
+    async getAll(): Promise<void> {
+        try {
+            const usersList = await this.db.manyOrNone('SELECT * FROM users');
+
+            return usersList;
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }

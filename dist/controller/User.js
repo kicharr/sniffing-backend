@@ -45,6 +45,17 @@ class UserController {
             }
         });
     }
+    getAllUsers(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const usersList = yield this.userQueryRepository.getAll();
+                res.status(200).json(usersList);
+            }
+            catch (e) {
+                next(e);
+            }
+        });
+    }
     updateUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -49,7 +49,7 @@ class UserRepositoryImpl {
     deleteById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.db.oneOrNone('DELETE FROM users WHERE id = $1', [id]);
+                yield this.db.none('DELETE FROM users WHERE id = $1', [id]);
             }
             catch (e) {
                 console.log(e);

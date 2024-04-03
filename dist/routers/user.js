@@ -22,6 +22,10 @@ const getUserInfo = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     const controller = initController();
     yield controller.getUserInfo(req, res, next);
 });
+const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const controller = initController();
+    yield controller.getAllUsers(req, res, next);
+});
 const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const controller = initController();
     yield controller.updateUser(req, res, next);
@@ -32,6 +36,7 @@ const removeUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 router.post('/user', createUser);
 router.get('/user/:id', getUserInfo);
+router.get('/users', getAllUsers);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', removeUser);
 exports.default = router;
