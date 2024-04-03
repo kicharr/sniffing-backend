@@ -19,12 +19,24 @@ const user_1 = __importDefault(require("./user"));
 const articleRouter = (0, express_1.Router)();
 // initialising the controller for an entity
 const initArticleController = () => {
-    return new Article_1.ArticleController(DependencyContainer_1.DependencyContainer.dependencyContainer.ArticleService(), DependencyContainer_1.DependencyContainer.dependencyContainer.ArticleQueryRepository);
+    return new Article_1.ArticleController(DependencyContainer_1.DependencyContainer.dependencyContainer.ArticleService(), DependencyContainer_1.DependencyContainer.dependencyContainer.ArticleQueryRepository());
 };
 // Methods of working on the essence
 const createArticle = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const controller = initArticleController();
     yield controller.createArticle(req, res, next);
+});
+const getArticleInfo = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const controller = initArticleController();
+    yield controller.getArticleInfo(req, res, next);
+});
+const getAllArticles = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const controller = initArticleController();
+    yield controller.getAllArticles(req, res, next);
+});
+const updateArticle = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const controller = initArticleController();
+    yield controller.updateArticle(req, res, next);
 });
 const deleteArticle = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const controller = initArticleController();
@@ -32,6 +44,9 @@ const deleteArticle = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 });
 // Routes on which I call methods
 user_1.default.post('/article', createArticle);
+user_1.default.get('/article/:id', getArticleInfo);
+user_1.default.get('/articles', getAllArticles);
+user_1.default.put('/article/:id', updateArticle);
 user_1.default.delete('/article/:id', deleteArticle);
 exports.default = articleRouter;
 //# sourceMappingURL=article.js.map

@@ -25,6 +25,20 @@ export class ArticleRepositoryImpl implements ArticleRepository {
         }
     }
 
+    async getById(id: string): Promise<Article> {
+        try {
+            const data = await this.db.oneOrNone('SELECT * FROM articles WHERE id = $1', [id]);
+
+            if (!data) {
+                return null
+            }
+
+            return new Article(data?.title, data?.body, data?.create_date, data?.preview_url, data?.id)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     async deleteById(id: string): Promise<void> {
         try {
             await this.db.none('DELETE FROM articles WHERE id = $1', [id])

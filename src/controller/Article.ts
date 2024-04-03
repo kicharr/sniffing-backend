@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from "express";
 import {ArticleService} from "../service/article-service/ArticleService";
 import {ArticleQueryRepository} from "../repository/article-repository/ArticleQueryRepository";
 import {ArticleDTO} from "../infrastucture/dto/ArticleDTO";
+import {ArticleQueryDTO} from "../repository/article-repository/dto/ArticleQueryDTO"
 
 export class ArticleController {
     private readonly articleService: ArticleService
@@ -22,6 +23,39 @@ export class ArticleController {
             await this.articleService.createArticle(newArticle);
 
             res.status(200).json(`Article ${newArticle?.id} successfully added!`);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async getArticleInfo(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const article: ArticleQueryDTO = await this.articleQueryRepository.getById(req.params.id as string);
+            res.status(200).json(article);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async getAllArticles(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const articlesList = await this.articleQueryRepository.getAll();
+            res.status(200).json(articlesList);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async updateArticle(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const {title = null, body = null, createDate = null, previewUrl = null}: ArticleDTO = req.body;
+
+            const id: string = req.params.id;
+
+            const changedArticleData: ArticleDTO = {id, title, body, createDate, previewUrl};
+
+            await this.articleService.updateById(changedArticleData);
+            res.status(200).json('ok');
         } catch (e) {
             console.log(e)
         }

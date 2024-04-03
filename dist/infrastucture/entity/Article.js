@@ -30,7 +30,7 @@ class Article {
         this._title = val;
     }
     set body(val) {
-        this.body = val;
+        this._body = val;
     }
     set preview(val) {
         this._previewUrl = val;

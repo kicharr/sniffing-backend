@@ -28,13 +28,48 @@ class ArticleController {
             }
         });
     }
+    getArticleInfo(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const article = yield this.articleQueryRepository.getById(req.params.id);
+                res.status(200).json(article);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    getAllArticles(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const articlesList = yield this.articleQueryRepository.getAll();
+                res.status(200).json(articlesList);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    updateArticle(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { title = null, body = null, createDate = null, previewUrl = null } = req.body;
+                const id = req.params.id;
+                const changedArticleData = { id, title, body, createDate, previewUrl };
+                yield this.articleService.updateById(changedArticleData);
+                res.status(200).json('ok');
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
     deleteArticle(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c;
+            var _a, _b;
             try {
-                console.log((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
-                yield this.articleService.deleteById((_b = req.params) === null || _b === void 0 ? void 0 : _b.id);
-                res.status(200).json(`Article with id ${(_c = req.params) === null || _c === void 0 ? void 0 : _c.id}, deleted from articles`);
+                yield this.articleService.deleteById((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
+                res.status(200).json(`Article with id ${(_b = req.params) === null || _b === void 0 ? void 0 : _b.id}, deleted from articles`);
             }
             catch (e) {
                 console.log(e);

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticleRepositoryImpl = void 0;
+const Article_1 = require("../../../infrastucture/entity/Article");
 class ArticleRepositoryImpl {
     constructor(db) {
         this.db = db;
@@ -31,9 +32,22 @@ class ArticleRepositoryImpl {
             }
         });
     }
+    getById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const data = yield this.db.oneOrNone('SELECT * FROM articles WHERE id = $1', [id]);
+                if (!data) {
+                    return null;
+                }
+                return new Article_1.Article(data === null || data === void 0 ? void 0 : data.title, data === null || data === void 0 ? void 0 : data.body, data === null || data === void 0 ? void 0 : data.create_date, data === null || data === void 0 ? void 0 : data.preview_url, data === null || data === void 0 ? void 0 : data.id);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
     deleteById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(id);
             try {
                 yield this.db.none('DELETE FROM articles WHERE id = $1', [id]);
             }

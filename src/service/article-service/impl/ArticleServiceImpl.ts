@@ -15,6 +15,16 @@ export class ArticleServiceImpl implements ArticleService {
         await this.articleRepository.store(newArticle);
     }
 
+    async updateById(article: ArticleDTO): Promise<void> {
+        const currentArticleData: Article = await this.articleRepository.getById(article?.id);
+
+        currentArticleData.title = article?.title ?? currentArticleData.title;
+        currentArticleData.body = article?.body ?? currentArticleData.body;
+        currentArticleData.preview = article?.previewUrl ?? currentArticleData.preview;
+
+        await this.articleRepository.store(currentArticleData);
+    }
+
     async deleteById(id: string): Promise<void> {
         await this.articleRepository.deleteById(id);
     }

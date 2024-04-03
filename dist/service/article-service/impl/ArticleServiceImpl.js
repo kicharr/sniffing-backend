@@ -21,6 +21,16 @@ class ArticleServiceImpl {
             yield this.articleRepository.store(newArticle);
         });
     }
+    updateById(article) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c;
+            const currentArticleData = yield this.articleRepository.getById(article === null || article === void 0 ? void 0 : article.id);
+            currentArticleData.title = (_a = article === null || article === void 0 ? void 0 : article.title) !== null && _a !== void 0 ? _a : currentArticleData.title;
+            currentArticleData.body = (_b = article === null || article === void 0 ? void 0 : article.body) !== null && _b !== void 0 ? _b : currentArticleData.body;
+            currentArticleData.preview = (_c = article === null || article === void 0 ? void 0 : article.previewUrl) !== null && _c !== void 0 ? _c : currentArticleData.preview;
+            yield this.articleRepository.store(currentArticleData);
+        });
+    }
     deleteById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.articleRepository.deleteById(id);

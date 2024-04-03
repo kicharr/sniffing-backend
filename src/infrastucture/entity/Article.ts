@@ -43,7 +43,7 @@ export class Article {
     }
 
     set body(val: string) {
-        this.body = val
+        this._body = val
     }
 
     set preview(val: string) {
