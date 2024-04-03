@@ -1,4 +1,4 @@
-import {UserDTO} from "../infrastucture/dto/UserDTO";
+import {UserDTO} from "../../infrastucture/dto/UserDTO";
 
 
 export interface UserService {

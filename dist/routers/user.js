@@ -12,32 +12,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const User_1 = require("../controller/User");
 const DependencyContainer_1 = require("../middleware/DependencyContainer");
-const router = (0, express_1.Router)();
-const initController = () => new User_1.UserController(DependencyContainer_1.DependencyContainer.dependencyContainer.UserService(), DependencyContainer_1.DependencyContainer.dependencyContainer.UserQueryRepository());
+const userRouter = (0, express_1.Router)();
+// initialising the controller for an entity
+const initUserController = () => {
+    return new User_1.UserController(DependencyContainer_1.DependencyContainer.dependencyContainer.UserService(), DependencyContainer_1.DependencyContainer.dependencyContainer.UserQueryRepository());
+};
+// Methods of working on the essence
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const controller = initController();
+    const controller = initUserController();
     yield controller.createUser(req, res, next);
 });
 const getUserInfo = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const controller = initController();
+    const controller = initUserController();
     yield controller.getUserInfo(req, res, next);
 });
 const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const controller = initController();
+    const controller = initUserController();
     yield controller.getAllUsers(req, res, next);
 });
 const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const controller = initController();
+    const controller = initUserController();
     yield controller.updateUser(req, res, next);
 });
 const removeUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const controller = initController();
+    const controller = initUserController();
     yield controller.removeUser(req, res, next);
 });
-router.post('/user', createUser);
-router.get('/user/:id', getUserInfo);
-router.get('/users', getAllUsers);
-router.put('/user/:id', updateUser);
-router.delete('/user/:id', removeUser);
-exports.default = router;
+// Routes on which I call methods
+userRouter.post('/user', createUser);
+userRouter.get('/user/:id', getUserInfo);
+userRouter.get('/users', getAllUsers);
+userRouter.put('/user/:id', updateUser);
+userRouter.delete('/user/:id', removeUser);
+exports.default = userRouter;
 //# sourceMappingURL=user.js.map

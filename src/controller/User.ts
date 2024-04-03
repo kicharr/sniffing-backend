@@ -1,8 +1,8 @@
 import {NextFunction, Request, Response} from "express";
-import {UserService} from "../service/UserService";
+import {UserService} from "../service/user-service/UserService";
 import {UserDTO} from "../infrastucture/dto/UserDTO";
-import {UserQueryRepository} from "../repository/UserQueryRepository";
-import {UserQueryDTO} from "../repository/dto/UserQueryDTO";
+import {UserQueryRepository} from "../repository/user-repository/UserQueryRepository";
+import {UserQueryDTO} from "../repository/user-repository/dto/UserQueryDTO";
 
 export class UserController {
     private readonly userService: UserService

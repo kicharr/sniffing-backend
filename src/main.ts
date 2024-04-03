@@ -1,7 +1,8 @@
 import express, {Express, Request, Response, NextFunction} from 'express';
-import router from "./routers/user";
 import {DependencyContainer} from "./middleware/DependencyContainer";
 import bodyParser from "body-parser";
+import userRouter from "./routers/user";
+import articleRouter from "./routers/article";
 
 const PORT: number = 5000;
 
@@ -13,7 +14,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-app.use(router);
+app.use(userRouter);
+app.use(articleRouter);
 
 app.listen(PORT, () => {
     console.log(`Server started at port: ${PORT}, http://localhost:${PORT}`)

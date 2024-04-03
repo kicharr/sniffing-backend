@@ -1,6 +1,6 @@
 import {UserRepository} from "../UserRepository";
-import {User} from "../../infrastucture/entity/User";
-import user from "../../routers/user";
+import {User} from "../../../infrastucture/entity/User";
+
 
 export class UserRepositoryImpl implements UserRepository {
     private readonly db
@@ -11,14 +11,16 @@ export class UserRepositoryImpl implements UserRepository {
 
     async store(user: User): Promise<void> {
         try {
-            await this.db.none(`
-                        INSERT INTO users (id, first_name, second_name, birth_date, registration_date, sex, avatar_url)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7)
-                        ON CONFLICT (id) DO UPDATE SET first_name  = $2,
-                                                       second_name = $3,
-                                                       birth_date  = $4,
-                                                       sex         = $6,
-                                                       avatar_url  = $7`,
+            await this.db.none(
+                `
+                    INSERT INTO users (id, first_name, second_name, birth_date, registration_date, sex, avatar_url)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)
+                    ON CONFLICT (id) DO UPDATE SET first_name  = $2,
+                                                   second_name = $3,
+                                                   birth_date  = $4,
+                                                   sex         = $6,
+                                                   avatar_url  = $7
+                `,
                 [user.id, user.firstName, user.secondName, user.birthDate, user.registrationDate, user.sex, user.avatarUrl])
         } catch (e) {
             console.log(e)
