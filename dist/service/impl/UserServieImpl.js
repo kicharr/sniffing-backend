@@ -33,6 +33,16 @@ class UserServiceImpl {
             yield this.userRepository.store(userData);
         });
     }
+    deleteById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.userRepository.deleteById(id);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
 }
 exports.UserServiceImpl = UserServiceImpl;
 //# sourceMappingURL=UserServieImpl.js.map

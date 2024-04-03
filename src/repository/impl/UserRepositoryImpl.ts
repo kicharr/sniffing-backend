@@ -38,4 +38,12 @@ export class UserRepositoryImpl implements UserRepository {
             console.log(e)
         }
     }
+
+    async deleteById(id: string): Promise<void> {
+        try {
+            await this.db.oneOrNone('DELETE FROM users WHERE id = $1', [id]);
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }

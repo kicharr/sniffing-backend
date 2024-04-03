@@ -24,7 +24,14 @@ export class UserServiceImpl implements UserService {
         userData.birthDate = user.birthDate ?? userData.birthDate;
         userData.avatarUrl = user.avatarUrl ?? userData.avatarUrl;
 
-
         await this.userRepository.store(userData);
+    }
+
+    async deleteById(id: string): Promise<void> {
+        try {
+            await this.userRepository.deleteById(id);
+        } catch (e) {
+            console.log(e)
+        }
     }
 }

@@ -27,7 +27,7 @@ class UserController {
                     avatarUrl
                 };
                 yield this.userService.createUser(newUser);
-                res.status(200).json('ok');
+                res.status(200).json(`User ${newUser === null || newUser === void 0 ? void 0 : newUser.firstName} successfully added!`);
             }
             catch (e) {
                 next(e);
@@ -59,7 +59,7 @@ class UserController {
                     avatarUrl
                 };
                 yield this.userService.changeUserData(changedUserData);
-                res.status(200).json('ok');
+                res.status(200).json(`User ${id} was successfully updated!`);
             }
             catch (e) {
                 next(e);
@@ -68,8 +68,10 @@ class UserController {
     }
     removeUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
             try {
-                res.status(200).json('ok');
+                yield this.userService.deleteById((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
+                res.status(200).json(`User with id ${(_b = req.params) === null || _b === void 0 ? void 0 : _b.id}, deleted from users`);
             }
             catch (e) {
                 next(e);

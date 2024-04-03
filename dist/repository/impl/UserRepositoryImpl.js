@@ -36,7 +36,20 @@ class UserRepositoryImpl {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const data = yield this.db.oneOrNone('SELECT * FROM users WHERE id = $1', [id]);
-                return new User_1.User(data.first_name, data.second_name, data.birth_date, data.sex, data.registration_date, data.avatar_url, data.id);
+                if (!data) {
+                    return null;
+                }
+                return new User_1.User(data === null || data === void 0 ? void 0 : data.first_name, data === null || data === void 0 ? void 0 : data.second_name, data === null || data === void 0 ? void 0 : data.birth_date, data === null || data === void 0 ? void 0 : data.sex, data === null || data === void 0 ? void 0 : data.registration_date, data === null || data === void 0 ? void 0 : data.avatar_url, data === null || data === void 0 ? void 0 : data.id);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    deleteById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.db.oneOrNone('DELETE FROM users WHERE id = $1', [id]);
             }
             catch (e) {
                 console.log(e);

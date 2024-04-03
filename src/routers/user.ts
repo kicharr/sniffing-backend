@@ -6,22 +6,22 @@ const router: Router = Router();
 
 const initController = (): UserController => new UserController(DependencyContainer.dependencyContainer.UserService(), DependencyContainer.dependencyContainer.UserQueryRepository());
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
+const createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const controller: UserController = initController();
     await controller.createUser(req, res, next)
 }
 
-const getUserInfo = async (req: Request, res: Response, next: NextFunction) => {
+const getUserInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const controller: UserController = initController();
     await controller.getUserInfo(req, res, next)
 }
 
-const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+const updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const controller: UserController = initController();
     await controller.updateUser(req, res, next)
 }
 
-const removeUser = async (req: Request, res: Response, next: NextFunction) => {
+const removeUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const controller: UserController = initController();
     await controller.removeUser(req, res, next)
 }

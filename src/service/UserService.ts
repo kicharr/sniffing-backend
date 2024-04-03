@@ -5,5 +5,7 @@ export interface UserService {
     createUser(user: UserDTO): Promise<void>
 
     changeUserData(user: UserDTO): Promise<void>
+
+    deleteById(id: string): Promise<void>
 }
 

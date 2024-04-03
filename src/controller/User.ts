@@ -13,7 +13,7 @@ export class UserController {
         this.userQueryRepository = userQueryRepository
     }
 
-    async createUser(req: Request, res: Response, next: NextFunction) {
+    async createUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const {firstName, secondName, sex, birthDate, avatarUrl} = req.body;
 
@@ -27,13 +27,13 @@ export class UserController {
 
             await this.userService.createUser(newUser);
 
-            res.status(200).json('ok');
+            res.status(200).json(`User ${newUser?.firstName} successfully added!`);
         } catch (e) {
             next(e)
         }
     }
 
-    async getUserInfo(req: Request, res: Response, next: NextFunction) {
+    async getUserInfo(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const userData: UserQueryDTO = await this.userQueryRepository.getById(req.params.id as string);
             res.status(200).json(userData);
@@ -42,7 +42,7 @@ export class UserController {
         }
     }
 
-    async updateUser(req: Request, res: Response, next: NextFunction) {
+    async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const {firstName = null, secondName = null, sex = null, birthDate = null, avatarUrl = null} = req.body;
 
@@ -59,16 +59,16 @@ export class UserController {
 
             await this.userService.changeUserData(changedUserData)
 
-            res.status(200).json('ok');
+            res.status(200).json(`User ${id} was successfully updated!`);
         } catch (e) {
             next(e)
         }
     }
 
-    async removeUser(req: Request, res: Response, next: NextFunction) {
+    async removeUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-
-            res.status(200).json('ok');
+            await this.userService.deleteById(req.params?.id);
+            res.status(200).json(`User with id ${req.params?.id}, deleted from users`);
         } catch (e) {
             next(e)
         }
