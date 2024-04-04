@@ -18,9 +18,9 @@ class ArticleController {
     createArticle(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { title, body, createDate, previewUrl } = req.body;
-                const newArticle = { title, body, createDate, previewUrl };
-                yield this.articleService.createArticle(newArticle);
+                const { title, body, previewUrl, userId } = req.body;
+                const newArticle = { title, body, previewUrl };
+                yield this.articleService.createArticle(newArticle, userId);
                 res.status(200).json(`Article ${newArticle === null || newArticle === void 0 ? void 0 : newArticle.id} successfully added!`);
             }
             catch (e) {
@@ -53,9 +53,9 @@ class ArticleController {
     updateArticle(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { title = null, body = null, createDate = null, previewUrl = null } = req.body;
+                const { title = null, body = null, previewUrl = null } = req.body;
                 const id = req.params.id;
-                const changedArticleData = { id, title, body, createDate, previewUrl };
+                const changedArticleData = { id, title, body, previewUrl };
                 yield this.articleService.updateById(changedArticleData);
                 res.status(200).json('ok');
             }

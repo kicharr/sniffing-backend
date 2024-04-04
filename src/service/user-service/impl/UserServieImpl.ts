@@ -1,5 +1,5 @@
 import {UserService} from "../UserService";
-import {UserRepository} from "../../../repository/user-repository/UserRepository";
+import {UserRepository} from "../../../repository/domain/UserRepository";
 import {User} from "../../../infrastucture/entity/User";
 import {UserDTO} from "../../../infrastucture/dto/UserDTO";
 

@@ -1,8 +1,8 @@
 import {NextFunction, Request, Response} from "express";
 import {ArticleService} from "../service/article-service/ArticleService";
-import {ArticleQueryRepository} from "../repository/article-repository/ArticleQueryRepository";
+import {ArticleQueryRepository} from "../repository/query/ArticleQueryRepository";
 import {ArticleDTO} from "../infrastucture/dto/ArticleDTO";
-import {ArticleQueryDTO} from "../repository/article-repository/dto/ArticleQueryDTO"
+import {ArticleQueryDTO} from "../repository/query/dto/ArticleQueryDTO"
 
 export class ArticleController {
     private readonly articleService: ArticleService
@@ -16,11 +16,11 @@ export class ArticleController {
 
     async createArticle(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const {title, body, createDate, previewUrl} = req.body;
+            const {title, body, previewUrl, userId} = req.body;
 
-            const newArticle: ArticleDTO = {title, body, createDate, previewUrl}
+            const newArticle: ArticleDTO = {title, body, previewUrl}
 
-            await this.articleService.createArticle(newArticle);
+            await this.articleService.createArticle(newArticle,userId);
 
             res.status(200).json(`Article ${newArticle?.id} successfully added!`);
         } catch (e) {
@@ -48,11 +48,11 @@ export class ArticleController {
 
     async updateArticle(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const {title = null, body = null, createDate = null, previewUrl = null}: ArticleDTO = req.body;
+            const {title = null, body = null, previewUrl = null}: ArticleDTO = req.body;
 
             const id: string = req.params.id;
 
-            const changedArticleData: ArticleDTO = {id, title, body, createDate, previewUrl};
+            const changedArticleData: ArticleDTO = {id, title, body, previewUrl};
 
             await this.articleService.updateById(changedArticleData);
             res.status(200).json('ok');

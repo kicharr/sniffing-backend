@@ -2,7 +2,7 @@ import {NextFunction, Request, Response, Router} from "express";
 import {ArticleController} from "../controller/Article";
 import {DependencyContainer} from "../middleware/DependencyContainer";
 import userRouter from "./user";
-import {ArticleQueryDTO} from "../repository/article-repository/dto/ArticleQueryDTO";
+import {ArticleQueryDTO} from "../repository/query/dto/ArticleQueryDTO";
 
 const articleRouter: Router = Router();
 

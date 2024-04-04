@@ -12,12 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticleServiceImpl = void 0;
 const Article_1 = require("../../../infrastucture/entity/Article");
 class ArticleServiceImpl {
-    constructor(articleRepository) {
+    constructor(articleRepository, userRepository) {
         this.articleRepository = articleRepository;
+        this.userRepository = userRepository;
     }
-    createArticle(article) {
+    createArticle(article, userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const newArticle = new Article_1.Article(article.title, article.body, article.createDate, article.previewUrl);
+            const author = yield this.userRepository.getById(userId);
+            const newArticle = new Article_1.Article(article.title, article.body, article.previewUrl, author);
             yield this.articleRepository.store(newArticle);
         });
     }

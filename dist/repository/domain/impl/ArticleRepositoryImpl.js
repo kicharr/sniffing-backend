@@ -38,7 +38,16 @@ class ArticleRepositoryImpl {
     getAuthorByArticleId(articleId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield this.db.oneOrNone(`SELECT id, first_name, second_name, birth_date, registration_date, sex, avatar_url FROM articles_authors as a LEFT JOIN users as u on u.id = a.user_id WHERE article_id = $1`, [articleId]);
+                const data = yield this.db.oneOrNone(`SELECT id,
+                                                         first_name,
+                                                         second_name,
+                                                         birth_date,
+                                                         registration_date,
+                                                         sex,
+                                                         avatar_url
+                                                  FROM articles_authors as a
+                                                           LEFT JOIN users as u on u.id = a.user_id
+                                                  WHERE article_id = $1`, [articleId]);
                 return data ? new User_1.User(data === null || data === void 0 ? void 0 : data.first_name, data === null || data === void 0 ? void 0 : data.second_name, data === null || data === void 0 ? void 0 : data.birth_date, data === null || data === void 0 ? void 0 : data.sex, data === null || data === void 0 ? void 0 : data.registration_date, data === null || data === void 0 ? void 0 : data.avatar_url, data === null || data === void 0 ? void 0 : data.id) : null;
             }
             catch (e) {

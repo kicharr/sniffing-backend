@@ -1,17 +1,22 @@
 import {ArticleService} from "../ArticleService";
-import {ArticleRepository} from "../../../repository/article-repository/ArticleRepository";
+import {ArticleRepository} from "../../../repository/domain/ArticleRepository";
 import {ArticleDTO} from "../../../infrastucture/dto/ArticleDTO";
 import {Article} from "../../../infrastucture/entity/Article";
+import {UserRepository} from "../../../repository/domain/UserRepository";
+import {User} from "../../../infrastucture/entity/User";
 
 export class ArticleServiceImpl implements ArticleService {
-    private readonly articleRepository: ArticleRepository
+    private readonly articleRepository: ArticleRepository;
+    private readonly userRepository: UserRepository;
 
-    constructor(articleRepository: ArticleRepository) {
-        this.articleRepository = articleRepository
+    constructor(articleRepository: ArticleRepository, userRepository: UserRepository) {
+        this.articleRepository = articleRepository;
+        this.userRepository = userRepository
     }
 
-    async createArticle(article: ArticleDTO): Promise<void> {
-        const newArticle: Article = new Article(article.title, article.body, article.createDate, article.previewUrl);
+    async createArticle(article: ArticleDTO, userId: string): Promise<void> {
+        const author: User = await this.userRepository.getById(userId);
+        const newArticle: Article = new Article(article.title, article.body, article.previewUrl, author);
         await this.articleRepository.store(newArticle);
     }
 

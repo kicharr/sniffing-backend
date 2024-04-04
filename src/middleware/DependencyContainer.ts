@@ -1,19 +1,19 @@
 import pgp from 'pg-promise'
 
 import {UserServiceImpl} from "../service/user-service/impl/UserServieImpl";
-import {UserRepository} from "../repository/user-repository/UserRepository";
-import {UserRepositoryImpl} from "../repository/user-repository/impl/UserRepositoryImpl";
+import {UserRepository} from "../repository/domain/UserRepository";
+import {UserRepositoryImpl} from "../repository/domain/impl/UserRepositoryImpl";
 import {UserService} from "../service/user-service/UserService";
-import {UserQueryRepository} from "../repository/user-repository/UserQueryRepository";
-import {UserQueryRepositoryImpl} from "../repository/user-repository/impl/UserQueryRepositoryImpl";
+import {UserQueryRepository} from "../repository/query/UserQueryRepository";
+import {UserQueryRepositoryImpl} from "../repository/query/impl/UserQueryRepositoryImpl";
 
 
-import {ArticleRepository} from "../repository/article-repository/ArticleRepository";
-import {ArticleRepositoryImpl} from "../repository/article-repository/impl/ArticleRepositoryImpl";
+import {ArticleRepository} from "../repository/domain/ArticleRepository";
+import {ArticleRepositoryImpl} from "../repository/domain/impl/ArticleRepositoryImpl";
 import {ArticleService} from "../service/article-service/ArticleService";
 import {ArticleServiceImpl} from "../service/article-service/impl/ArticleServiceImpl";
-import {ArticleQueryRepository} from "../repository/article-repository/ArticleQueryRepository";
-import {ArticleQueryRepositoryImpl} from "../repository/article-repository/impl/ArticleQueryRepositoryImpl";
+import {ArticleQueryRepository} from "../repository/query/ArticleQueryRepository";
+import {ArticleQueryRepositoryImpl} from "../repository/query/impl/ArticleQueryRepositoryImpl";
 
 export class DependencyContainer {
     private dbClient
@@ -49,7 +49,7 @@ export class DependencyContainer {
 
     // Articles
     ArticleRepository = (): ArticleRepository => new ArticleRepositoryImpl(this.dbClient);
-    ArticleService = (): ArticleService => new ArticleServiceImpl(this.ArticleRepository());
+    ArticleService = (): ArticleService => new ArticleServiceImpl(this.ArticleRepository(),this.UserRepository());
     ArticleQueryRepository = (): ArticleQueryRepository => new ArticleQueryRepositoryImpl(this.dbClient);
 }
 
