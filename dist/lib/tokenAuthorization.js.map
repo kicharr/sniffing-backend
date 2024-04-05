@@ -1,0 +1,1 @@
+{"version":3,"file":"tokenAuthorization.js","sourceRoot":"","sources":["../../src/lib/tokenAuthorization.ts"],"names":[],"mappings":";;;AAAA,+CAAkC;AAClC,2CAAsC;AAEtC,SAAgB,mBAAmB,CAAC,EAAU;IAC1C,IAAI,CAAC;QACD,OAAO,IAAA,mBAAI,EAAC,EAAE,EAAE,qBAAS,CAAC,SAAS,CAAC,CAAC;IACzC,CAAC;IAAC,OAAO,CAAC,EAAE,CAAC;QACT,MAAM,CAAC,CAAC;IACZ,CAAC;AACL,CAAC;AAND,kDAMC"}

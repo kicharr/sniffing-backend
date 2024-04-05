@@ -1,9 +1,9 @@
 import {ArticleService} from "../ArticleService";
-import {ArticleRepository} from "../../../repository/domain/ArticleRepository";
-import {ArticleDTO} from "../../../infrastucture/dto/ArticleDTO";
-import {Article} from "../../../infrastucture/entity/Article";
-import {UserRepository} from "../../../repository/domain/UserRepository";
-import {User} from "../../../infrastucture/entity/User";
+import {ArticleRepository} from "../../repository/domain/ArticleRepository";
+import {ArticleDTO} from "../../infrastucture/dto/ArticleDTO";
+import {Article} from "../../infrastucture/entity/Article";
+import {UserRepository} from "../../repository/domain/UserRepository";
+import {User} from "../../infrastucture/entity/User";
 
 export class ArticleServiceImpl implements ArticleService {
     private readonly articleRepository: ArticleRepository;

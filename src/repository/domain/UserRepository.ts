@@ -5,5 +5,7 @@ export interface UserRepository {
 
     getById(id: string): Promise<User>
 
+    getByLogin(login: string): Promise<User>
+
     deleteById(id: string): Promise<void>
 }

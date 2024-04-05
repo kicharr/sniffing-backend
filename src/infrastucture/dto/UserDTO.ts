@@ -6,4 +6,6 @@ export interface UserDTO {
     registrationDate?: Date
     sex: string
     avatarUrl: string
+    login?: string
+    password?: string
 }

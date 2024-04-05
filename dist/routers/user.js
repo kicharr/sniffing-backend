@@ -22,6 +22,10 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     const controller = initUserController();
     yield controller.createUser(req, res, next);
 });
+const authorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const controller = initUserController();
+    yield controller.authorization(req, res, next);
+});
 const getUserInfo = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const controller = initUserController();
     yield controller.getUserInfo(req, res, next);
@@ -40,6 +44,7 @@ const removeUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 // Routes on which I call methods
 userRouter.post('/user', createUser);
+userRouter.post('/authorization', authorization);
 userRouter.get('/user/:id', getUserInfo);
 userRouter.get('/users', getAllUsers);
 userRouter.put('/user/:id', updateUser);

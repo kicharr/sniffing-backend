@@ -1,17 +1,17 @@
 import pgp from 'pg-promise'
 
-import {UserServiceImpl} from "../service/user-service/impl/UserServieImpl";
+import {UserServiceImpl} from "../service/impl/UserServieImpl";
 import {UserRepository} from "../repository/domain/UserRepository";
 import {UserRepositoryImpl} from "../repository/domain/impl/UserRepositoryImpl";
-import {UserService} from "../service/user-service/UserService";
+import {UserService} from "../service/UserService";
 import {UserQueryRepository} from "../repository/query/UserQueryRepository";
 import {UserQueryRepositoryImpl} from "../repository/query/impl/UserQueryRepositoryImpl";
 
 
 import {ArticleRepository} from "../repository/domain/ArticleRepository";
 import {ArticleRepositoryImpl} from "../repository/domain/impl/ArticleRepositoryImpl";
-import {ArticleService} from "../service/article-service/ArticleService";
-import {ArticleServiceImpl} from "../service/article-service/impl/ArticleServiceImpl";
+import {ArticleService} from "../service/ArticleService";
+import {ArticleServiceImpl} from "../service/impl/ArticleServiceImpl";
 import {ArticleQueryRepository} from "../repository/query/ArticleQueryRepository";
 import {ArticleQueryRepositoryImpl} from "../repository/query/impl/ArticleQueryRepositoryImpl";
 

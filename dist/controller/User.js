@@ -18,19 +18,33 @@ class UserController {
     createUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { firstName, secondName, sex, birthDate, avatarUrl } = req.body;
+                const { login, password, firstName, secondName, sex, birthDate, avatarUrl } = req.body;
                 const newUser = {
+                    login,
+                    password,
                     firstName,
                     secondName,
                     sex,
                     birthDate,
-                    avatarUrl
+                    avatarUrl,
                 };
                 yield this.userService.createUser(newUser);
                 res.status(200).json(`User ${newUser === null || newUser === void 0 ? void 0 : newUser.firstName} successfully added!`);
             }
             catch (e) {
                 next(e);
+            }
+        });
+    }
+    authorization(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { login, password } = req.body;
+                const token = yield this.userService.authorization({ login, password });
+                res.status(200).json({ token: token });
+            }
+            catch (e) {
+                res.status(401).json('Invalid login data');
             }
         });
     }
@@ -59,10 +73,12 @@ class UserController {
     updateUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { firstName = null, secondName = null, sex = null, birthDate = null, avatarUrl = null } = req.body;
+                const { login = null, password = null, firstName = null, secondName = null, sex = null, birthDate = null, avatarUrl = null } = req.body;
                 const id = req.params.id;
                 const changedUserData = {
                     id,
+                    login,
+                    password,
                     firstName,
                     secondName,
                     sex,

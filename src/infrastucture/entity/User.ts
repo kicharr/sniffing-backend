@@ -2,6 +2,8 @@ import {v4} from "uuid";
 
 export class User {
     private readonly _id: string
+    private _login: string
+    private _password: string
     private _firstName: string
     private _secondName: string
     private _birthDate: Date
@@ -9,7 +11,8 @@ export class User {
     private _sex: string
     private _avatarUrl: string
 
-    constructor(firstName: string, secondName: string, birthDate: Date, sex: string = null, registrationDate: Date = new Date(), avatarUrl: string = null, id: string = v4()) {
+
+    constructor(login: string, password: string, firstName: string, secondName: string, birthDate: Date, sex: string = null,  registrationDate: Date = new Date(), avatarUrl: string = null, id: string = v4()) {
         this._id = id
         this._firstName = firstName
         this._secondName = secondName
@@ -17,6 +20,8 @@ export class User {
         this._registrationDate = registrationDate
         this._sex = sex
         this._avatarUrl = avatarUrl
+        this._login = login
+        this._password = password
     }
 
     get id(): string {
@@ -47,6 +52,14 @@ export class User {
         return this._avatarUrl
     }
 
+    get login(): string {
+        return this._login
+    }
+
+    get password(): string {
+        return this._password
+    }
+
     // Setters
 
     set firstName(val: string) {
@@ -69,5 +82,12 @@ export class User {
         this._avatarUrl = val
     }
 
+    set login(val: string) {
+        this._login = val
+    }
+
+    set password(val: string) {
+        this._password = val
+    }
 
 }

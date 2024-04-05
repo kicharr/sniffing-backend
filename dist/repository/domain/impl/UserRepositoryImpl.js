@@ -19,14 +19,32 @@ class UserRepositoryImpl {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.db.none(`
-                    INSERT INTO users (id, first_name, second_name, birth_date, registration_date, sex, avatar_url)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7)
-                    ON CONFLICT (id) DO UPDATE SET first_name  = $2,
-                                                   second_name = $3,
-                                                   birth_date  = $4,
-                                                   sex         = $6,
-                                                   avatar_url  = $7
-                `, [user.id, user.firstName, user.secondName, user.birthDate, user.registrationDate, user.sex, user.avatarUrl]);
+                    INSERT INTO users (id, login, password, first_name, second_name, birth_date, registration_date, sex,
+                                       avatar_url)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                    ON CONFLICT (id) DO UPDATE SET login       = $2,
+                                                   password    = $3,
+                                                   first_name  = $4,
+                                                   second_name = $5,
+                                                   birth_date  = $6,
+                                                   sex         = $8,
+                                                   avatar_url  = $9
+                `, [user.id, user.login, user.password, user.firstName, user.secondName, user.birthDate, user.registrationDate, user.sex, user.avatarUrl]);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    getByLogin(login) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const data = yield this.db.oneOrNone(`
+                        SELECT *
+                        FROM users
+                        WHERE login = $1
+                `, [login]);
+                return new User_1.User(data === null || data === void 0 ? void 0 : data.login, data === null || data === void 0 ? void 0 : data.password, data === null || data === void 0 ? void 0 : data.first_name, data === null || data === void 0 ? void 0 : data.second_name, data === null || data === void 0 ? void 0 : data.birth_date, data === null || data === void 0 ? void 0 : data.sex, data === null || data === void 0 ? void 0 : data.registration_date, data === null || data === void 0 ? void 0 : data.avatar_url, data === null || data === void 0 ? void 0 : data.id);
             }
             catch (e) {
                 console.log(e);
@@ -40,7 +58,7 @@ class UserRepositoryImpl {
                 if (!data) {
                     return null;
                 }
-                return new User_1.User(data === null || data === void 0 ? void 0 : data.first_name, data === null || data === void 0 ? void 0 : data.second_name, data === null || data === void 0 ? void 0 : data.birth_date, data === null || data === void 0 ? void 0 : data.sex, data === null || data === void 0 ? void 0 : data.registration_date, data === null || data === void 0 ? void 0 : data.avatar_url, data === null || data === void 0 ? void 0 : data.id);
+                return new User_1.User(data === null || data === void 0 ? void 0 : data.login, data === null || data === void 0 ? void 0 : data.password, data === null || data === void 0 ? void 0 : data.first_name, data === null || data === void 0 ? void 0 : data.second_name, data === null || data === void 0 ? void 0 : data.birth_date, data === null || data === void 0 ? void 0 : data.sex, data === null || data === void 0 ? void 0 : data.registration_date, data === null || data === void 0 ? void 0 : data.avatar_url, data === null || data === void 0 ? void 0 : data.id);
             }
             catch (e) {
                 console.log(e);

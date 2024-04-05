@@ -19,6 +19,7 @@ class UserQueryRepositoryImpl {
             try {
                 const userData = yield this.db.oneOrNone('SELECT * FROM users WHERE id = $1', [id]);
                 return {
+                    login: userData === null || userData === void 0 ? void 0 : userData.login,
                     firstName: userData === null || userData === void 0 ? void 0 : userData.first_name,
                     secondName: userData === null || userData === void 0 ? void 0 : userData.second_name,
                     sex: userData === null || userData === void 0 ? void 0 : userData.sex,
@@ -35,7 +36,16 @@ class UserQueryRepositoryImpl {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const usersList = yield this.db.manyOrNone('SELECT * FROM users');
-                return usersList;
+                return usersList.map((user) => {
+                    return user = {
+                        login: user === null || user === void 0 ? void 0 : user.login,
+                        firstName: user === null || user === void 0 ? void 0 : user.first_name,
+                        secondName: user === null || user === void 0 ? void 0 : user.second_name,
+                        birthDate: user === null || user === void 0 ? void 0 : user.birth_date,
+                        sex: user === null || user === void 0 ? void 0 : user.sex,
+                        avatarUrl: user === null || user === void 0 ? void 0 : user.avatar_url,
+                    };
+                });
             }
             catch (e) {
                 console.log(e);

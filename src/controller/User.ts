@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {UserService} from "../service/user-service/UserService";
+import {UserService} from "../service/UserService";
 import {UserDTO} from "../infrastucture/dto/UserDTO";
 import {UserQueryRepository} from "../repository/query/UserQueryRepository";
 import {UserQueryDTO} from "../repository/query/dto/UserQueryDTO";
@@ -15,14 +15,16 @@ export class UserController {
 
     async createUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const {firstName, secondName, sex, birthDate, avatarUrl} = req.body;
+            const {login, password, firstName, secondName, sex, birthDate, avatarUrl} = req.body;
 
             const newUser: UserDTO = {
+                login,
+                password,
                 firstName,
                 secondName,
                 sex,
                 birthDate,
-                avatarUrl
+                avatarUrl,
             }
 
             await this.userService.createUser(newUser);
@@ -30,6 +32,16 @@ export class UserController {
             res.status(200).json(`User ${newUser?.firstName} successfully added!`);
         } catch (e) {
             next(e)
+        }
+    }
+
+    async authorization(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const {login, password} = req.body;
+            const token: string = await this.userService.authorization({login, password});
+            res.status(200).json({token: token})
+        } catch (e) {
+            res.status(401).json('Invalid login data')
         }
     }
 
@@ -44,7 +56,7 @@ export class UserController {
 
     async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const usersList = await this.userQueryRepository.getAll();
+            const usersList: Array<UserQueryDTO> = await this.userQueryRepository.getAll();
             res.status(200).json(usersList);
         } catch (e) {
             next(e)
@@ -53,12 +65,22 @@ export class UserController {
 
     async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const {firstName = null, secondName = null, sex = null, birthDate = null, avatarUrl = null} = req.body;
+            const {
+                login = null,
+                password = null,
+                firstName = null,
+                secondName = null,
+                sex = null,
+                birthDate = null,
+                avatarUrl = null
+            } = req.body;
 
             const id: string = req.params.id;
 
             const changedUserData: UserDTO = {
                 id,
+                login,
+                password,
                 firstName,
                 secondName,
                 sex,

@@ -11,25 +11,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserServiceImpl = void 0;
 const User_1 = require("../../infrastucture/entity/User");
+const tokenAuthorization_1 = require("../../lib/tokenAuthorization");
 class UserServiceImpl {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
     createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const newUser = new User_1.User(user.firstName, user.secondName, user.birthDate, user.sex, user.registrationDate, user.avatarUrl);
+            const newUser = new User_1.User(user.login, user.password, user.firstName, user.secondName, user.birthDate, user.sex, user.registrationDate, user.avatarUrl);
             yield this.userRepository.store(newUser);
+        });
+    }
+    authorization(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ login, password }) {
+            console.log(login, password);
+            const userData = yield this.getByLogin(login);
+            console.log(userData);
+            if ((userData === null || userData === void 0 ? void 0 : userData.password) !== password) {
+                throw new Error('Invalid authorization data');
+            }
+            return (0, tokenAuthorization_1.generateTokenFromId)(userData === null || userData === void 0 ? void 0 : userData.id);
+        });
+    }
+    getByLogin(login) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield this.userRepository.getByLogin(login);
+            return data;
         });
     }
     changeUserData(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e;
+            var _a, _b, _c, _d, _e, _f, _g;
             const userData = yield this.userRepository.getById(user === null || user === void 0 ? void 0 : user.id);
-            userData.firstName = (_a = user.firstName) !== null && _a !== void 0 ? _a : userData.firstName;
-            userData.secondName = (_b = user.secondName) !== null && _b !== void 0 ? _b : userData.secondName;
-            userData.sex = (_c = user.sex) !== null && _c !== void 0 ? _c : userData.sex;
-            userData.birthDate = (_d = user.birthDate) !== null && _d !== void 0 ? _d : userData.birthDate;
-            userData.avatarUrl = (_e = user.avatarUrl) !== null && _e !== void 0 ? _e : userData.avatarUrl;
+            userData.login = (_a = user.login) !== null && _a !== void 0 ? _a : userData === null || userData === void 0 ? void 0 : userData.login;
+            userData.password = (_b = user.password) !== null && _b !== void 0 ? _b : userData === null || userData === void 0 ? void 0 : userData.password;
+            userData.firstName = (_c = user === null || user === void 0 ? void 0 : user.firstName) !== null && _c !== void 0 ? _c : userData.firstName;
+            userData.secondName = (_d = user.secondName) !== null && _d !== void 0 ? _d : userData.secondName;
+            userData.sex = (_e = user.sex) !== null && _e !== void 0 ? _e : userData.sex;
+            userData.birthDate = (_f = user.birthDate) !== null && _f !== void 0 ? _f : userData.birthDate;
+            userData.avatarUrl = (_g = user.avatarUrl) !== null && _g !== void 0 ? _g : userData.avatarUrl;
+            console.log(user);
+            console.log(userData);
             yield this.userRepository.store(userData);
         });
     }

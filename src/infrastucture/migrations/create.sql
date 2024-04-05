@@ -1,6 +1,8 @@
 CREATE TABLE users
 (
     id                uuid PRIMARY KEY,
+    login             VARCHAR,
+    password          VARCHAR,
     first_name        VARCHAR,
     second_name       VARCHAR,
     birth_date        timestamp,

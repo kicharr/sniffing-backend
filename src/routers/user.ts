@@ -15,6 +15,10 @@ const createUser = async (req: Request, res: Response, next: NextFunction): Prom
     const controller: UserController = initUserController();
     await controller.createUser(req, res, next)
 }
+const authorization = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const controller: UserController = initUserController();
+    await controller.authorization(req, res, next);
+}
 const getUserInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const controller: UserController = initUserController();
     await controller.getUserInfo(req, res, next)
@@ -35,6 +39,7 @@ const removeUser = async (req: Request, res: Response, next: NextFunction): Prom
 
 // Routes on which I call methods
 userRouter.post('/user', createUser);
+userRouter.post('/authorization', authorization);
 userRouter.get('/user/:id', getUserInfo);
 userRouter.get('/users', getAllUsers);
 userRouter.put('/user/:id', updateUser);

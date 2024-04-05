@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DependencyContainer = void 0;
 const pg_promise_1 = __importDefault(require("pg-promise"));
-const UserServieImpl_1 = require("../service/user-service/impl/UserServieImpl");
+const UserServieImpl_1 = require("../service/impl/UserServieImpl");
 const UserRepositoryImpl_1 = require("../repository/domain/impl/UserRepositoryImpl");
 const UserQueryRepositoryImpl_1 = require("../repository/query/impl/UserQueryRepositoryImpl");
 const ArticleRepositoryImpl_1 = require("../repository/domain/impl/ArticleRepositoryImpl");
-const ArticleServiceImpl_1 = require("../service/article-service/impl/ArticleServiceImpl");
+const ArticleServiceImpl_1 = require("../service/impl/ArticleServiceImpl");
 const ArticleQueryRepositoryImpl_1 = require("../repository/query/impl/ArticleQueryRepositoryImpl");
 class DependencyContainer {
     constructor() {

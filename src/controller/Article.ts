@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {ArticleService} from "../service/article-service/ArticleService";
+import {ArticleService} from "../service/ArticleService";
 import {ArticleQueryRepository} from "../repository/query/ArticleQueryRepository";
 import {ArticleDTO} from "../infrastucture/dto/ArticleDTO";
 import {ArticleQueryDTO} from "../repository/query/dto/ArticleQueryDTO"

@@ -1,5 +1,6 @@
 import {UserRepository} from "../UserRepository";
 import {User} from "../../../infrastucture/entity/User";
+import {UserDTO} from "../../../infrastucture/dto/UserDTO";
 
 
 export class UserRepositoryImpl implements UserRepository {
@@ -13,15 +14,34 @@ export class UserRepositoryImpl implements UserRepository {
         try {
             await this.db.none(
                 `
-                    INSERT INTO users (id, first_name, second_name, birth_date, registration_date, sex, avatar_url)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7)
-                    ON CONFLICT (id) DO UPDATE SET first_name  = $2,
-                                                   second_name = $3,
-                                                   birth_date  = $4,
-                                                   sex         = $6,
-                                                   avatar_url  = $7
+                    INSERT INTO users (id, login, password, first_name, second_name, birth_date, registration_date, sex,
+                                       avatar_url)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                    ON CONFLICT (id) DO UPDATE SET login       = $2,
+                                                   password    = $3,
+                                                   first_name  = $4,
+                                                   second_name = $5,
+                                                   birth_date  = $6,
+                                                   sex         = $8,
+                                                   avatar_url  = $9
                 `,
-                [user.id, user.firstName, user.secondName, user.birthDate, user.registrationDate, user.sex, user.avatarUrl])
+                [user.id, user.login, user.password, user.firstName, user.secondName, user.birthDate, user.registrationDate, user.sex, user.avatarUrl])
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    async getByLogin(login: string): Promise<User> {
+        try {
+            const data = await this.db.oneOrNone(`
+                        SELECT *
+                        FROM users
+                        WHERE login = $1
+                `, [login]
+            )
+
+            return new User(data?.login, data?.password, data?.first_name, data?.second_name, data?.birth_date, data?.sex, data?.registration_date, data?.avatar_url, data?.id)
         } catch (e) {
             console.log(e)
         }
@@ -35,7 +55,7 @@ export class UserRepositoryImpl implements UserRepository {
                 return null
             }
 
-            return new User(data?.first_name, data?.second_name, data?.birth_date, data?.sex, data?.registration_date, data?.avatar_url, data?.id)
+            return new User(data?.login, data?.password, data?.first_name, data?.second_name, data?.birth_date, data?.sex, data?.registration_date, data?.avatar_url,  data?.id)
         } catch (e) {
             console.log(e)
         }
