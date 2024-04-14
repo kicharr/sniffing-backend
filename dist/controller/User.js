@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
+const tokenAuthorization_1 = require("../lib/tokenAuthorization");
 class UserController {
     constructor(userService, userQueryRepository) {
         this.userService = userService;
@@ -51,7 +52,9 @@ class UserController {
     getUserInfo(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userData = yield this.userQueryRepository.getById(req.params.id);
+                const token = req === null || req === void 0 ? void 0 : req.header('X-Auth-Token');
+                const userId = (0, tokenAuthorization_1.getIdFromToken)(token);
+                const userData = yield this.userQueryRepository.getById(userId);
                 res.status(200).json(userData);
             }
             catch (e) {
@@ -62,6 +65,12 @@ class UserController {
     getAllUsers(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const token = req === null || req === void 0 ? void 0 : req.header('X-Auth-Token');
+                const userId = (0, tokenAuthorization_1.getIdFromToken)(token);
+                const userData = yield this.userQueryRepository.getById(userId);
+                if (!userData) {
+                    return;
+                }
                 const usersList = yield this.userQueryRepository.getAll();
                 res.status(200).json(usersList);
             }
@@ -73,6 +82,12 @@ class UserController {
     updateUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const token = req === null || req === void 0 ? void 0 : req.header('X-Auth-Token');
+                const userId = (0, tokenAuthorization_1.getIdFromToken)(token);
+                const userData = yield this.userQueryRepository.getById(userId);
+                if (!userData) {
+                    return;
+                }
                 const { login = null, password = null, firstName = null, secondName = null, sex = null, birthDate = null, avatarUrl = null } = req.body;
                 const id = req.params.id;
                 const changedUserData = {
@@ -95,10 +110,12 @@ class UserController {
     }
     removeUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
+            var _a;
             try {
-                yield this.userService.deleteById((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
-                res.status(200).json(`User with id ${(_b = req.params) === null || _b === void 0 ? void 0 : _b.id}, deleted from users`);
+                const token = req === null || req === void 0 ? void 0 : req.header('X-Auth-Token');
+                const userId = (0, tokenAuthorization_1.getIdFromToken)(token);
+                yield this.userService.deleteById(userId);
+                res.status(200).json(`User with id ${(_a = req.params) === null || _a === void 0 ? void 0 : _a.id}, deleted from users`);
             }
             catch (e) {
                 next(e);

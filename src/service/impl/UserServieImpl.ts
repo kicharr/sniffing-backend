@@ -3,6 +3,7 @@ import {UserRepository} from "../../repository/domain/UserRepository";
 import {User} from "../../infrastucture/entity/User";
 import {UserDTO} from "../../infrastucture/dto/UserDTO";
 import {generateTokenFromId} from "../../lib/tokenAuthorization";
+import user from "../../routers/user";
 
 export class UserServiceImpl implements UserService {
     private readonly userRepository: UserRepository
@@ -17,18 +18,16 @@ export class UserServiceImpl implements UserService {
     }
 
     async authorization({login, password}): Promise<string> {
-        const userData: User = await this.getByLogin(login);
+        const userData: User = await this.userRepository.getByLogin(login);
 
         if (userData?.password !== password) {
-            throw new Error('Invalid authorization data')
+            throw new Error('Invalid authorization data');
         }
 
         return generateTokenFromId(userData?.id);
     }
 
-    async getByLogin(login: string): Promise<User> {
-        return await this.userRepository.getByLogin(login);
-    }
+
 
     async changeUserData(user: UserDTO): Promise<void> {
         const userData: User = await this.userRepository.getById(user?.id)

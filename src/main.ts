@@ -1,4 +1,4 @@
-import express, {Express, Request, Response, NextFunction} from 'express';
+import express, {Express} from 'express';
 import {DependencyContainer} from "./middleware/DependencyContainer";
 import bodyParser from "body-parser";
 import userRouter from "./routers/user";

@@ -24,19 +24,11 @@ class UserServiceImpl {
     }
     authorization(_a) {
         return __awaiter(this, arguments, void 0, function* ({ login, password }) {
-            console.log(login, password);
-            const userData = yield this.getByLogin(login);
-            console.log(userData);
+            const userData = yield this.userRepository.getByLogin(login);
             if ((userData === null || userData === void 0 ? void 0 : userData.password) !== password) {
                 throw new Error('Invalid authorization data');
             }
             return (0, tokenAuthorization_1.generateTokenFromId)(userData === null || userData === void 0 ? void 0 : userData.id);
-        });
-    }
-    getByLogin(login) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const data = yield this.userRepository.getByLogin(login);
-            return data;
         });
     }
     changeUserData(user) {
@@ -50,8 +42,6 @@ class UserServiceImpl {
             userData.sex = (_e = user.sex) !== null && _e !== void 0 ? _e : userData.sex;
             userData.birthDate = (_f = user.birthDate) !== null && _f !== void 0 ? _f : userData.birthDate;
             userData.avatarUrl = (_g = user.avatarUrl) !== null && _g !== void 0 ? _g : userData.avatarUrl;
-            console.log(user);
-            console.log(userData);
             yield this.userRepository.store(userData);
         });
     }

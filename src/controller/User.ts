@@ -3,6 +3,8 @@ import {UserService} from "../service/UserService";
 import {UserDTO} from "../infrastucture/dto/UserDTO";
 import {UserQueryRepository} from "../repository/query/UserQueryRepository";
 import {UserQueryDTO} from "../repository/query/dto/UserQueryDTO";
+import {generateTokenFromId, getIdFromToken} from "../lib/tokenAuthorization";
+import user from "../routers/user";
 
 export class UserController {
     private readonly userService: UserService
@@ -47,7 +49,10 @@ export class UserController {
 
     async getUserInfo(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const userData: UserQueryDTO = await this.userQueryRepository.getById(req.params.id as string);
+            const token: string = req?.header('X-Auth-Token');
+            const userId: string = getIdFromToken(token);
+
+            const userData: UserQueryDTO = await this.userQueryRepository.getById(userId);
             res.status(200).json(userData);
         } catch (e) {
             next(e)
@@ -56,6 +61,14 @@ export class UserController {
 
     async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
+            const token: string = req?.header('X-Auth-Token');
+            const userId: string = getIdFromToken(token);
+            const userData: UserQueryDTO = await this.userQueryRepository.getById(userId);
+
+            if (!userData) {
+                return;
+            }
+
             const usersList: Array<UserQueryDTO> = await this.userQueryRepository.getAll();
             res.status(200).json(usersList);
         } catch (e) {
@@ -65,15 +78,15 @@ export class UserController {
 
     async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const {
-                login = null,
-                password = null,
-                firstName = null,
-                secondName = null,
-                sex = null,
-                birthDate = null,
-                avatarUrl = null
-            } = req.body;
+            const token: string = req?.header('X-Auth-Token');
+            const userId: string = getIdFromToken(token);
+            const userData: UserQueryDTO = await this.userQueryRepository.getById(userId);
+
+            if (!userData) {
+                return;
+            }
+
+            const {login = null, password = null, firstName = null, secondName = null, sex = null, birthDate = null, avatarUrl = null} = req.body;
 
             const id: string = req.params.id;
 
@@ -98,7 +111,10 @@ export class UserController {
 
     async removeUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            await this.userService.deleteById(req.params?.id);
+            const token: string = req?.header('X-Auth-Token');
+            const userId: string = getIdFromToken(token);
+
+            await this.userService.deleteById(userId);
             res.status(200).json(`User with id ${req.params?.id}, deleted from users`);
         } catch (e) {
             next(e)

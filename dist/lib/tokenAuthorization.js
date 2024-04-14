@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateTokenFromId = void 0;
+exports.getIdFromToken = exports.generateTokenFromId = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 const appConfig_1 = require("./appConfig");
 function generateTokenFromId(id) {
@@ -12,4 +12,13 @@ function generateTokenFromId(id) {
     }
 }
 exports.generateTokenFromId = generateTokenFromId;
+function getIdFromToken(token) {
+    try {
+        return (0, jsonwebtoken_1.verify)(token, appConfig_1.appConfig.secretKey);
+    }
+    catch (e) {
+        throw e;
+    }
+}
+exports.getIdFromToken = getIdFromToken;
 //# sourceMappingURL=tokenAuthorization.js.map

@@ -7,8 +7,6 @@ export interface UserService {
 
     authorization({login, password}): Promise<string>
 
-    getByLogin(login: string): Promise<User>
-
     changeUserData(user: UserDTO): Promise<void>
 
     deleteById(id: string): Promise<void>
